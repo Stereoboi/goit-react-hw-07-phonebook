@@ -5,12 +5,11 @@ import { getContacts, getStatusFilter } from "redux/selectors";
 
 const getVisibleContacts = (contacts, filter) => {
   if (filter.status === "") {
-    // console.log(contacts);
-    // console.log(filter);
-    return contacts.userContacts
+
+    return contacts
   }
   if (filter.status !== "") {
-     return contacts.userContacts.filter(contact =>
+     return contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.status.toLowerCase())
   );
   }
@@ -20,10 +19,11 @@ const getVisibleContacts = (contacts, filter) => {
 export const ContactList = () => {
 
   const contacts = useSelector(getContacts);
-  console.log(contacts);
+
   const filter = useSelector(getStatusFilter);
-  // console.log(filter);
+
   const visibleContacts = getVisibleContacts(contacts, filter);
+
   return (
       <List >  
         {visibleContacts.map(contact => (

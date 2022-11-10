@@ -1,25 +1,33 @@
 import { Label, Input, Button, FormWrapper } from "./Form.styled";
 import { Formik, ErrorMessage } from 'formik'
 import * as yup from 'yup'
-import { useDispatch } from "react-redux";
-import { addContact } from "redux/contactsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addContact } from "redux/operations";
+import { getContacts} from "redux/selectors";
 export const FormContact = () => {
 
   const initialValues = {
     name: '',
-    number: '',
+    phone: '',
   }
+
+  const contacts = useSelector(getContacts);
+  
 
   const dispatch = useDispatch();
   
   const handleSubmit = (values, { resetForm }) => {
+  if (contacts.some(el => el.name.toLowerCase() === values.name.toLowerCase())) {
+    alert("this contact are alredy in your phonebook")
+    return
+  }
     dispatch(addContact(values))
     resetForm();
   }
   
-    const schema = yup.object().shape({
-      name: yup.string().required(),
-      number: yup.string().min(6).required(),
+  const schema = yup.object().shape({
+    name: yup.string().required(),
+    phone: yup.string().min(6).required(),
   })
  
     return (
@@ -39,12 +47,12 @@ export const FormContact = () => {
                 
             </Label>
             <Label>
-              Number
+              Phone
                 <Input
                   type="text"
-                  name="number"
+                  name="phone"
                 />
-                <ErrorMessage name="number" />
+                <ErrorMessage name="phone" />
             </Label>
             <Button type='submit'>Add contact</Button>
           </FormWrapper>
