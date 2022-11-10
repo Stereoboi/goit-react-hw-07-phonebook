@@ -32,8 +32,6 @@ export const selectError = state => state.contacts.error;
 export const selectVisibleContacts = createSelector(
   [selectContacts, selectStatusFilter],
   (contacts, filter) => {
-   console.log(contacts); 
-   console.log(filter); 
   if (filter.status === "") {
     return contacts
   }

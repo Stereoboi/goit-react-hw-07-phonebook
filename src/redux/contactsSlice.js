@@ -34,7 +34,6 @@ import { fetchContacts, addContact, deleteContact } from "./operations";
     [addContact.fulfilled](state, action) {
       state.isLoading = false;
       state.error = null;
-      console.log(action.payload); 
       state.userContacts.push(action.payload);
     },
     
